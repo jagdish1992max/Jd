@@ -1,114 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>AI Chat Pro</title>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial;
-      background: #0b1220;
-      color: white;
-      display: flex;
-      justify-content: center;
-      height: 100vh;
-    }
-
-    .app {
-      width: 100%;
-      max-width: 650px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .topbar {
-      background: #111827;
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    select {
-      padding: 5px;
-      border-radius: 5px;
-    }
-
-    .chat {
-      flex: 1;
-      padding: 15px;
-      overflow-y: auto;
-    }
-
-    .msg {
-      padding: 10px;
-      margin: 8px 0;
-      border-radius: 10px;
-      max-width: 80%;
-    }
-
-    .user {
-      background: #2563eb;
-      margin-left: auto;
-    }
-
-    .bot {
-      background: #374151;
-    }
-
-    .input-box {
-      display: flex;
-      padding: 10px;
-      background: #111827;
-    }
-
-    input {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-    }
-
-    button {
-      margin-left: 10px;
-      padding: 10px 15px;
-      background: #22c55e;
-      border: none;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-  </style>
-</head>
-
-<body>
-
-<div class="app">
-
-  <div class="topbar">
-    <div>🤖 AI Chat Pro</div>
-
-    <select id="lang">
-      <option value="en">English</option>
-      <option value="hi">Hindi</option>
-      <option value="es">Spanish</option>
-      <option value="fr">French</option>
-    </select>
-  </div>
-
-  <div class="chat" id="chat"></div>
-
-  <div class="input-box">
-    <input id="input" placeholder="Type message..." />
-    <button onclick="send()">Send</button>
-  </div>
-
-</div>
-
 <script>
 function send() {
   let input = document.getElementById("input");
-  let text = input.value;
+  let text = input.value.trim();
   if (!text) return;
 
   let lang = document.getElementById("lang").value;
@@ -118,7 +11,7 @@ function send() {
   setTimeout(() => {
     let reply = generateReply(text, lang);
     add(reply, "bot");
-  }, 500);
+  }, 400);
 
   input.value = "";
 }
@@ -127,19 +20,33 @@ function add(text, type) {
   let div = document.createElement("div");
   div.className = "msg " + type;
   div.innerText = text;
+
   document.getElementById("chat").appendChild(div);
+  document.getElementById("chat").scrollTop = 99999;
 }
 
+// 🔥 SMART LANGUAGE + HINGLISH SUPPORT
 function generateReply(text, lang) {
-  let base = "I understand: " + text;
 
-  if (lang === "hi") return "🤖 मैंने समझा: " + text;
-  if (lang === "es") return "🤖 Entiendo: " + text;
-  if (lang === "fr") return "🤖 Je comprends: " + text;
+  let lower = text.toLowerCase();
 
-  return base;
+  // 🌍 HINGLISH DETECTION (important)
+  let isHinglish =
+    /kya|kaise|kyun|hai|nahi|bolo|batao|karna|ho/g.test(lower);
+
+  if (lang === "hi" || isHinglish) {
+    return "🤖 Main samajh gaya: " + text + " (Hinglish mode active)";
+  }
+
+  if (lang === "es") {
+    return "🤖 Entiendo: " + text;
+  }
+
+  if (lang === "fr") {
+    return "🤖 Je comprends: " + text;
+  }
+
+  // default English
+  return "🤖 I understand: " + text;
 }
 </script>
-
-</body>
-</html>
