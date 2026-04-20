@@ -3,10 +3,7 @@ const path = require("path");
 
 const app = express();
 
-// serve static files (IMPORTANT)
-app.use(express.static(__dirname));
-
-// homepage fix
+// direct file serve (cleanest method)
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
