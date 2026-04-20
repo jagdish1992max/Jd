@@ -1,110 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI ChatGPT Clone</title>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial;
-      background: #0f172a;
-      color: white;
-      display: flex;
-      justify-content: center;
-      height: 100vh;
-    }
-
-    .app {
-      width: 100%;
-      max-width: 600px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .chat {
-      flex: 1;
-      padding: 10px;
-      overflow-y: auto;
-    }
-
-    .msg {
-      margin: 10px;
-      padding: 10px;
-      border-radius: 10px;
-      max-width: 80%;
-    }
-
-    .user {
-      background: #2563eb;
-      margin-left: auto;
-    }
-
-    .bot {
-      background: #374151;
-    }
-
-    .input {
-      display: flex;
-      padding: 10px;
-      background: #111827;
-    }
-
-    input {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-    }
-
-    button {
-      margin-left: 10px;
-      padding: 10px;
-      background: green;
-      border: none;
-      color: white;
-      cursor: pointer;
-    }
-  </style>
+  <title>Chat Fix</title>
 </head>
 
-<body>
+<body style="font-family:Arial;background:#0f172a;color:white;text-align:center;">
 
-<div class="app">
+<h2>🤖 Chat Bot</h2>
 
-  <div class="chat" id="chat"></div>
+<div id="chat"></div>
 
-  <div class="input">
-    <input id="input" placeholder="Ask something..." />
-    <button onclick="send()">Send</button>
-  </div>
-
-</div>
+<input id="input" placeholder="type..." />
+<button onclick="send()">Send</button>
 
 <script>
 async function send() {
   let input = document.getElementById("input");
   let text = input.value;
+
   if (!text) return;
 
-  add(text, "user");
-
-  input.value = "";
+  add("👤 " + text);
 
   let res = await fetch("/chat", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({ message: text })
   });
 
   let data = await res.json();
 
-  add(data.reply, "bot");
+  add("🤖 " + data.reply);
+
+  input.value = "";
 }
 
-function add(text, type) {
+function add(text) {
   let div = document.createElement("div");
-  div.className = "msg " + type;
   div.innerText = text;
+  div.style.margin = "10px";
   document.getElementById("chat").appendChild(div);
 }
 </script>
