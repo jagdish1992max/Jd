@@ -1,25 +1,17 @@
 const express = require("express");
+const path = require("path");
+
 const app = express();
 
-// homepage
-app.get("/", (req, res) => {
-  res.send(`
-    <!DOCTYPE html>
-    <html>
-    <body>
-      <h1>🚀 Website Fully Working</h1>
-      <p>Server + Routing OK</p>
-    </body>
-    </html>
-  `);
-});
+// serve static files
+app.use(express.static(__dirname));
 
-// test route (optional)
-app.get("/test", (req, res) => {
-  res.send("FINAL CHECK OK 🚀");
+// MUST: homepage should serve HTML file
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log("Running");
+  console.log("Server running");
 });
