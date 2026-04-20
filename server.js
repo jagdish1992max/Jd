@@ -1,28 +1,21 @@
-const express = require("express");
-const path = require("path");
-
-const app = express();
-
-app.use(express.json());
-app.use(express.static(__dirname));
-
-// homepage
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
-});
-
-// chat API (NO AI, just working test)
-app.post("/chat", (req, res) => {
+app.post("/chat", async (req, res) => {
   const msg = req.body.message;
 
-  console.log("User message:", msg);
+  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer YOUR_API_KEY"
+    },
+    body: JSON.stringify({
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: msg }]
+    })
+  });
+
+  const data = await response.json();
 
   res.json({
-    reply: "🤖 Bot: You said -> " + msg
+    reply: data?.choices?.[0]?.message?.content || "No response"
   });
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log("Server running on port", PORT);
 });
