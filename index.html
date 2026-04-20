@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Chat Fix</title>
+  <title>Real AI Chat</title>
 </head>
 
-<body style="font-family:Arial;background:#0f172a;color:white;text-align:center;">
+<body style="margin:0;font-family:Arial;background:#0f172a;color:white;">
 
-<h2>🤖 Chat Bot</h2>
+<h2 style="text-align:center;padding:10px;">🤖 Real AI Chat</h2>
 
-<div id="chat"></div>
+<div id="chat" style="height:80vh;overflow:auto;padding:10px;"></div>
 
-<input id="input" placeholder="type..." />
-<button onclick="send()">Send</button>
+<div style="display:flex;padding:10px;background:#111827;">
+  <input id="input" style="flex:1;padding:10px;" placeholder="Ask anything..." />
+  <button onclick="send()" style="padding:10px;">Send</button>
+</div>
 
 <script>
 async function send() {
   let input = document.getElementById("input");
   let text = input.value;
-
   if (!text) return;
 
   add("👤 " + text);
+
+  input.value = "";
 
   let res = await fetch("/chat", {
     method: "POST",
@@ -33,14 +36,12 @@ async function send() {
   let data = await res.json();
 
   add("🤖 " + data.reply);
-
-  input.value = "";
 }
 
 function add(text) {
   let div = document.createElement("div");
-  div.innerText = text;
   div.style.margin = "10px";
+  div.innerText = text;
   document.getElementById("chat").appendChild(div);
 }
 </script>
