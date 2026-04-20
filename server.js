@@ -1,18 +1,9 @@
 const express = require("express");
-const path = require("path");
-
 const app = express();
 
-// direct file serve (cleanest method)
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.send("🚀 FINAL CHECK OK");
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log("Server running");
-});
-
-app.get("/test", (req, res) => {
-  res.send("TEST OK 🚀");
-});
+app.listen(PORT, () => console.log("RUNNING"));
