@@ -1,52 +1,15 @@
-<script>
-function send() {
-  let input = document.getElementById("input");
-  let text = input.value.trim();
-  if (!text) return;
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Chat UI</title>
+</head>
+<body style="font-family:Arial;background:#0f172a;color:white;text-align:center;padding:40px;">
 
-  let lang = document.getElementById("lang").value;
+  <h1>🤖 AI Chat UI</h1>
+  <p>System restored successfully</p>
 
-  add(text, "user");
+  <input placeholder="Type message..." />
+  <button onclick="alert('Demo reply')">Send</button>
 
-  setTimeout(() => {
-    let reply = generateReply(text, lang);
-    add(reply, "bot");
-  }, 400);
-
-  input.value = "";
-}
-
-function add(text, type) {
-  let div = document.createElement("div");
-  div.className = "msg " + type;
-  div.innerText = text;
-
-  document.getElementById("chat").appendChild(div);
-  document.getElementById("chat").scrollTop = 99999;
-}
-
-// 🔥 SMART LANGUAGE + HINGLISH SUPPORT
-function generateReply(text, lang) {
-
-  let lower = text.toLowerCase();
-
-  // 🌍 HINGLISH DETECTION (important)
-  let isHinglish =
-    /kya|kaise|kyun|hai|nahi|bolo|batao|karna|ho/g.test(lower);
-
-  if (lang === "hi" || isHinglish) {
-    return "🤖 Main samajh gaya: " + text + " (Hinglish mode active)";
-  }
-
-  if (lang === "es") {
-    return "🤖 Entiendo: " + text;
-  }
-
-  if (lang === "fr") {
-    return "🤖 Je comprends: " + text;
-  }
-
-  // default English
-  return "🤖 I understand: " + text;
-}
-</script>
+</body>
+</html>
