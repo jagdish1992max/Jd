@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI Chat UI</title>
-
+  <title>AI Chat Bot</title>
   <style>
     body {
       margin: 0;
@@ -14,7 +13,7 @@
       height: 100vh;
     }
 
-    .chat-container {
+    .chat {
       width: 100%;
       max-width: 600px;
       display: flex;
@@ -25,8 +24,6 @@
       padding: 15px;
       background: #111827;
       text-align: center;
-      font-size: 18px;
-      font-weight: bold;
     }
 
     .messages {
@@ -39,20 +36,18 @@
       padding: 10px;
       margin: 10px 0;
       border-radius: 10px;
-      max-width: 80%;
     }
 
     .user {
       background: #2563eb;
-      align-self: flex-end;
+      text-align: right;
     }
 
     .bot {
       background: #374151;
-      align-self: flex-start;
     }
 
-    .input-box {
+    .input {
       display: flex;
       padding: 10px;
       background: #111827;
@@ -61,18 +56,14 @@
     input {
       flex: 1;
       padding: 10px;
-      border: none;
-      border-radius: 5px;
-      outline: none;
     }
 
     button {
       margin-left: 10px;
-      padding: 10px 15px;
-      border: none;
-      background: #22c55e;
+      padding: 10px;
+      background: green;
       color: white;
-      border-radius: 5px;
+      border: none;
       cursor: pointer;
     }
   </style>
@@ -80,44 +71,41 @@
 
 <body>
 
-<div class="chat-container">
+<div class="chat">
 
-  <div class="header">
-    🤖 AI Chat UI (Demo)
-  </div>
+  <div class="header">🤖 AI Chat Bot</div>
 
   <div class="messages" id="messages"></div>
 
-  <div class="input-box">
+  <div class="input">
     <input id="input" placeholder="Type message..." />
-    <button onclick="sendMsg()">Send</button>
+    <button onclick="send()">Send</button>
   </div>
 
 </div>
 
 <script>
-  function sendMsg() {
-    let input = document.getElementById("input");
-    let msg = input.value;
-    if (!msg) return;
+function send() {
+  let input = document.getElementById("input");
+  let msg = input.value;
+  if (!msg) return;
 
-    addMessage(msg, "user");
+  add(msg, "user");
 
-    setTimeout(() => {
-      addMessage("🤖 This is a demo AI reply: " + msg, "bot");
-    }, 500);
+  setTimeout(() => {
+    add("🤖 Demo reply: " + msg, "bot");
+  }, 500);
 
-    input.value = "";
-  }
+  input.value = "";
+}
 
-  function addMessage(text, type) {
-    let div = document.createElement("div");
-    div.classList.add("msg", type);
-    div.innerText = text;
+function add(text, type) {
+  let div = document.createElement("div");
+  div.className = "msg " + type;
+  div.innerText = text;
 
-    document.getElementById("messages").appendChild(div);
-    document.getElementById("messages").scrollTop = 9999;
-  }
+  document.getElementById("messages").appendChild(div);
+}
 </script>
 
 </body>
