@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI Chat</title>
+  <title>AI ChatGPT Clone</title>
+
   <style>
     body {
       margin: 0;
@@ -13,7 +14,7 @@
       height: 100vh;
     }
 
-    .box {
+    .app {
       width: 100%;
       max-width: 600px;
       display: flex;
@@ -22,13 +23,13 @@
 
     .chat {
       flex: 1;
-      padding: 15px;
+      padding: 10px;
       overflow-y: auto;
     }
 
     .msg {
+      margin: 10px;
       padding: 10px;
-      margin: 8px;
       border-radius: 10px;
       max-width: 80%;
     }
@@ -36,7 +37,6 @@
     .user {
       background: #2563eb;
       margin-left: auto;
-      text-align: right;
     }
 
     .bot {
@@ -59,8 +59,8 @@
     button {
       margin-left: 10px;
       padding: 10px;
+      background: green;
       border: none;
-      background: #22c55e;
       color: white;
       cursor: pointer;
     }
@@ -69,52 +69,43 @@
 
 <body>
 
-<div class="box">
+<div class="app">
 
   <div class="chat" id="chat"></div>
 
   <div class="input">
-    <input id="input" placeholder="Type message..." />
+    <input id="input" placeholder="Ask something..." />
     <button onclick="send()">Send</button>
   </div>
 
 </div>
 
 <script>
-function send() {
+async function send() {
   let input = document.getElementById("input");
-  let text = input.value.trim();
+  let text = input.value;
   if (!text) return;
 
   add(text, "user");
 
-  setTimeout(() => {
-    add(reply(text), "bot");
-  }, 400);
-
   input.value = "";
+
+  let res = await fetch("/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: text })
+  });
+
+  let data = await res.json();
+
+  add(data.reply, "bot");
 }
 
 function add(text, type) {
   let div = document.createElement("div");
   div.className = "msg " + type;
   div.innerText = text;
-
   document.getElementById("chat").appendChild(div);
-}
-
-function reply(text) {
-  let t = text.toLowerCase();
-
-  if (t.includes("hello") || t.includes("hi")) {
-    return "👋 Hello! Kaise ho?";
-  }
-
-  if (t.includes("kya") || t.includes("kaise")) {
-    return "🤖 Main samajh gaya: " + text;
-  }
-
-  return "🤖 You said: " + text;
 }
 </script>
 
