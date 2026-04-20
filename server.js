@@ -1,18 +1,15 @@
 const express = require("express");
 const path = require("path");
-const fetch = require("node-fetch");
 
 const app = express();
 
 app.use(express.json());
 app.use(express.static(__dirname));
 
-// frontend
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// 🤖 AI ROUTE
 app.post("/chat", async (req, res) => {
   const userMessage = req.body.message;
 
@@ -21,7 +18,7 @@ app.post("/chat", async (req, res) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer YOUR_OPENAI_API_KEY"
+        "Authorization": "Bearer AIzaSyAX2Y_c-ryZVAmPe9gLJemoPdQBQCxmtYM"
       },
       body: JSON.stringify({
         model: "gpt-3.5-turbo",
@@ -32,11 +29,12 @@ app.post("/chat", async (req, res) => {
     const data = await response.json();
 
     res.json({
-      reply: data.choices[0].message.content
+      reply: data?.choices?.[0]?.message?.content || "No response"
     });
 
   } catch (err) {
-    res.json({ reply: "Error connecting AI ❌" });
+    console.log(err);
+    res.json({ reply: "AI Error ❌ Check API key or internet" });
   }
 });
 
