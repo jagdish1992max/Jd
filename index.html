@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Real AI Chat</title>
+  <title>Chat App</title>
 </head>
 
 <body style="margin:0;font-family:Arial;background:#0f172a;color:white;">
 
-<h2 style="text-align:center;padding:10px;">🤖 Real AI Chat</h2>
+<h2 style="text-align:center;padding:10px;">🤖 Simple Chat App</h2>
 
 <div id="chat" style="height:80vh;overflow:auto;padding:10px;"></div>
 
 <div style="display:flex;padding:10px;background:#111827;">
-  <input id="input" style="flex:1;padding:10px;" placeholder="Ask anything..." />
+  <input id="input" style="flex:1;padding:10px;" placeholder="Type message..." />
   <button onclick="send()" style="padding:10px;">Send</button>
 </div>
 
@@ -23,8 +23,6 @@ async function send() {
 
   add("👤 " + text);
 
-  input.value = "";
-
   let res = await fetch("/chat", {
     method: "POST",
     headers: {
@@ -35,13 +33,16 @@ async function send() {
 
   let data = await res.json();
 
-  add("🤖 " + data.reply);
+  add(data.reply);
+
+  input.value = "";
 }
 
 function add(text) {
   let div = document.createElement("div");
   div.style.margin = "10px";
   div.innerText = text;
+
   document.getElementById("chat").appendChild(div);
 }
 </script>
