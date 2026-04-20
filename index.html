@@ -1,68 +1,124 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My Modern Website</title>
+  <title>AI Chat UI</title>
+
   <style>
     body {
       margin: 0;
       font-family: Arial;
-      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      background: #0f172a;
       color: white;
+      display: flex;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .chat-container {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      padding: 15px;
+      background: #111827;
       text-align: center;
-    }
-
-    .container {
-      padding: 80px 20px;
-    }
-
-    h1 {
-      font-size: 40px;
-    }
-
-    p {
       font-size: 18px;
-      opacity: 0.9;
+      font-weight: bold;
     }
 
-    .card {
-      background: rgba(255,255,255,0.2);
-      padding: 20px;
-      margin: 20px auto;
-      width: 300px;
-      border-radius: 15px;
-      backdrop-filter: blur(10px);
+    .messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+    }
+
+    .msg {
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 10px;
+      max-width: 80%;
+    }
+
+    .user {
+      background: #2563eb;
+      align-self: flex-end;
+    }
+
+    .bot {
+      background: #374151;
+      align-self: flex-start;
+    }
+
+    .input-box {
+      display: flex;
+      padding: 10px;
+      background: #111827;
+    }
+
+    input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      outline: none;
     }
 
     button {
-      padding: 10px 20px;
+      margin-left: 10px;
+      padding: 10px 15px;
       border: none;
-      border-radius: 8px;
+      background: #22c55e;
+      color: white;
+      border-radius: 5px;
       cursor: pointer;
-      margin-top: 20px;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
-    <h1>🚀 My Modern Website</h1>
-    <p>Now upgraded with better design</p>
+<div class="chat-container">
 
-    <div class="card">
-      <h3>👨‍💻 Developer</h3>
-      <p>I build web apps using Node.js</p>
-    </div>
-
-    <div class="card">
-      <h3>⚡ Skills</h3>
-      <p>HTML • CSS • JavaScript • Express</p>
-    </div>
-
-    <button onclick="alert('Thanks for visiting!')">
-      Contact Me
-    </button>
+  <div class="header">
+    🤖 AI Chat UI (Demo)
   </div>
+
+  <div class="messages" id="messages"></div>
+
+  <div class="input-box">
+    <input id="input" placeholder="Type message..." />
+    <button onclick="sendMsg()">Send</button>
+  </div>
+
+</div>
+
+<script>
+  function sendMsg() {
+    let input = document.getElementById("input");
+    let msg = input.value;
+    if (!msg) return;
+
+    addMessage(msg, "user");
+
+    setTimeout(() => {
+      addMessage("🤖 This is a demo AI reply: " + msg, "bot");
+    }, 500);
+
+    input.value = "";
+  }
+
+  function addMessage(text, type) {
+    let div = document.createElement("div");
+    div.classList.add("msg", type);
+    div.innerText = text;
+
+    document.getElementById("messages").appendChild(div);
+    document.getElementById("messages").scrollTop = 9999;
+  }
+</script>
 
 </body>
 </html>
