@@ -1,12 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My Website</title>
-</head>
-<body style="text-align:center; font-family:Arial;">
+  <title>My Modern Website</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      color: white;
+      text-align: center;
+    }
 
-  <h1>🚀 Welcome to My Website</h1>
-  <p>This is my first live project</p>
+    .container {
+      padding: 80px 20px;
+    }
+
+    h1 {
+      font-size: 40px;
+    }
+
+    p {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.2);
+      padding: 20px;
+      margin: 20px auto;
+      width: 300px;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>🚀 My Modern Website</h1>
+    <p>Now upgraded with better design</p>
+
+    <div class="card">
+      <h3>👨‍💻 Developer</h3>
+      <p>I build web apps using Node.js</p>
+    </div>
+
+    <div class="card">
+      <h3>⚡ Skills</h3>
+      <p>HTML • CSS • JavaScript • Express</p>
+    </div>
+
+    <button onclick="alert('Thanks for visiting!')">
+      Contact Me
+    </button>
+  </div>
 
 </body>
 </html>
