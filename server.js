@@ -13,6 +13,6 @@ app.listen(PORT, () => {
   console.log("Server running");
 });
 
-git add .
-git commit -m "fix route"
-git push
+console.log("TEST STARTED");
+
+process.exit();
