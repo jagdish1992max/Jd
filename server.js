@@ -12,3 +12,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log("Server running");
 });
+
+git add .
+git commit -m "fix route"
+git push
