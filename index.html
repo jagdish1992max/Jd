@@ -1,15 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>AI Chat UI</title>
-</head>
-<body style="font-family:Arial;background:#0f172a;color:white;text-align:center;padding:40px;">
+<script>
+function send() {
+  let input = document.getElementById("input");
+  let msg = input.value.trim();
+  if (!msg) return;
 
-  <h1>🤖 AI Chat UI</h1>
-  <p>System restored successfully</p>
+  add(msg, "user");
 
-  <input placeholder="Type message..." />
-  <button onclick="alert('Demo reply')">Send</button>
+  setTimeout(() => {
+    add(getReply(msg), "bot");
+  }, 400);
 
-</body>
-</html>
+  input.value = "";
+}
+
+function add(text, type) {
+  let div = document.createElement("div");
+  div.style.textAlign = type === "user" ? "right" : "left";
+  div.style.margin = "10px";
+  div.innerText = (type === "bot" ? "🤖 " : "👤 ") + text;
+
+  document.body.appendChild(div);
+}
+
+// 🔥 SMART HINGLISH + BASIC AI STYLE RESPONSE
+function getReply(msg) {
+  let m = msg.toLowerCase();
+
+  if (m.includes("kaise") || m.includes("kya") || m.includes("kyun")) {
+    return "Main samajh gaya 👍 " + msg;
+  }
+
+  if (m.includes("hello") || m.includes("hi")) {
+    return "Hello! 👋 kaise ho?";
+  }
+
+  return "🤖 Tumne kaha: " + msg;
+}
+</script>
