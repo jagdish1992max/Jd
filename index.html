@@ -1,13 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Chat</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      display: flex;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .box {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+    }
+
+    .msg {
+      padding: 10px;
+      margin: 8px;
+      border-radius: 10px;
+      max-width: 80%;
+    }
+
+    .user {
+      background: #2563eb;
+      margin-left: auto;
+      text-align: right;
+    }
+
+    .bot {
+      background: #374151;
+    }
+
+    .input {
+      display: flex;
+      padding: 10px;
+      background: #111827;
+    }
+
+    input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-left: 10px;
+      padding: 10px;
+      border: none;
+      background: #22c55e;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+
+  <div class="chat" id="chat"></div>
+
+  <div class="input">
+    <input id="input" placeholder="Type message..." />
+    <button onclick="send()">Send</button>
+  </div>
+
+</div>
+
 <script>
 function send() {
   let input = document.getElementById("input");
-  let msg = input.value.trim();
-  if (!msg) return;
+  let text = input.value.trim();
+  if (!text) return;
 
-  add(msg, "user");
+  add(text, "user");
 
   setTimeout(() => {
-    add(getReply(msg), "bot");
+    add(reply(text), "bot");
   }, 400);
 
   input.value = "";
@@ -15,25 +97,26 @@ function send() {
 
 function add(text, type) {
   let div = document.createElement("div");
-  div.style.textAlign = type === "user" ? "right" : "left";
-  div.style.margin = "10px";
-  div.innerText = (type === "bot" ? "🤖 " : "👤 ") + text;
+  div.className = "msg " + type;
+  div.innerText = text;
 
-  document.body.appendChild(div);
+  document.getElementById("chat").appendChild(div);
 }
 
-// 🔥 SMART HINGLISH + BASIC AI STYLE RESPONSE
-function getReply(msg) {
-  let m = msg.toLowerCase();
+function reply(text) {
+  let t = text.toLowerCase();
 
-  if (m.includes("kaise") || m.includes("kya") || m.includes("kyun")) {
-    return "Main samajh gaya 👍 " + msg;
+  if (t.includes("hello") || t.includes("hi")) {
+    return "👋 Hello! Kaise ho?";
   }
 
-  if (m.includes("hello") || m.includes("hi")) {
-    return "Hello! 👋 kaise ho?";
+  if (t.includes("kya") || t.includes("kaise")) {
+    return "🤖 Main samajh gaya: " + text;
   }
 
-  return "🤖 Tumne kaha: " + msg;
+  return "🤖 You said: " + text;
 }
 </script>
+
+</body>
+</html>
