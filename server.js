@@ -3,12 +3,9 @@ const path = require("path");
 
 const app = express();
 
-// public folder serve
-app.use(express.static(path.join(__dirname, "public")));
-
-// homepage route
+// root file serve
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 const PORT = process.env.PORT || 3000;
