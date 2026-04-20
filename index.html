@@ -1,32 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI Chat Bot</title>
+  <title>AI Chat Pro</title>
+
   <style>
     body {
       margin: 0;
       font-family: Arial;
-      background: #0f172a;
+      background: #0b1220;
       color: white;
       display: flex;
       justify-content: center;
       height: 100vh;
     }
 
-    .chat {
+    .app {
       width: 100%;
-      max-width: 600px;
+      max-width: 650px;
       display: flex;
       flex-direction: column;
     }
 
-    .header {
-      padding: 15px;
+    .topbar {
       background: #111827;
-      text-align: center;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .messages {
+    select {
+      padding: 5px;
+      border-radius: 5px;
+    }
+
+    .chat {
       flex: 1;
       padding: 15px;
       overflow-y: auto;
@@ -34,20 +42,21 @@
 
     .msg {
       padding: 10px;
-      margin: 10px 0;
+      margin: 8px 0;
       border-radius: 10px;
+      max-width: 80%;
     }
 
     .user {
       background: #2563eb;
-      text-align: right;
+      margin-left: auto;
     }
 
     .bot {
       background: #374151;
     }
 
-    .input {
+    .input-box {
       display: flex;
       padding: 10px;
       background: #111827;
@@ -56,14 +65,17 @@
     input {
       flex: 1;
       padding: 10px;
+      border: none;
+      border-radius: 5px;
     }
 
     button {
       margin-left: 10px;
-      padding: 10px;
-      background: green;
-      color: white;
+      padding: 10px 15px;
+      background: #22c55e;
       border: none;
+      color: white;
+      border-radius: 5px;
       cursor: pointer;
     }
   </style>
@@ -71,13 +83,22 @@
 
 <body>
 
-<div class="chat">
+<div class="app">
 
-  <div class="header">🤖 AI Chat Bot</div>
+  <div class="topbar">
+    <div>🤖 AI Chat Pro</div>
 
-  <div class="messages" id="messages"></div>
+    <select id="lang">
+      <option value="en">English</option>
+      <option value="hi">Hindi</option>
+      <option value="es">Spanish</option>
+      <option value="fr">French</option>
+    </select>
+  </div>
 
-  <div class="input">
+  <div class="chat" id="chat"></div>
+
+  <div class="input-box">
     <input id="input" placeholder="Type message..." />
     <button onclick="send()">Send</button>
   </div>
@@ -87,13 +108,16 @@
 <script>
 function send() {
   let input = document.getElementById("input");
-  let msg = input.value;
-  if (!msg) return;
+  let text = input.value;
+  if (!text) return;
 
-  add(msg, "user");
+  let lang = document.getElementById("lang").value;
+
+  add(text, "user");
 
   setTimeout(() => {
-    add("🤖 Demo reply: " + msg, "bot");
+    let reply = generateReply(text, lang);
+    add(reply, "bot");
   }, 500);
 
   input.value = "";
@@ -103,8 +127,17 @@ function add(text, type) {
   let div = document.createElement("div");
   div.className = "msg " + type;
   div.innerText = text;
+  document.getElementById("chat").appendChild(div);
+}
 
-  document.getElementById("messages").appendChild(div);
+function generateReply(text, lang) {
+  let base = "I understand: " + text;
+
+  if (lang === "hi") return "🤖 मैंने समझा: " + text;
+  if (lang === "es") return "🤖 Entiendo: " + text;
+  if (lang === "fr") return "🤖 Je comprends: " + text;
+
+  return base;
 }
 </script>
 
